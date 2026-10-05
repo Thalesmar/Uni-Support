@@ -17,12 +17,24 @@ const PORT = process.env.MAIN_PORT || 8080;
 // Reads JSON bodies on POST/PATCH (req.body).
 app.use(express.json());
 
+// Allow requests from your local dev environment AND your GitHub Pages domain
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://thalesmar.github.io",
+];
+
 // Allow the Vite app (port 5173) to call this API and send cookies.
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
-    credentials: true,
-  }),
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Required for sending cookies/JWT headers
+  })
 );
 // Turns the Cookie header into req.cookies so auth middleware can read `token`.
 app.use(cookieParser());
