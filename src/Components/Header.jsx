@@ -115,6 +115,9 @@ const Header = ({ ticketsCount = 0, currentUser = null, onLogout = () => {} }) =
 
           <button
             className="hamburger-btn"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
           >
             {mobileMenuOpen ? <FiX /> : <FiMenu />}
@@ -131,12 +134,16 @@ const Header = ({ ticketsCount = 0, currentUser = null, onLogout = () => {} }) =
                 <BsFillMortarboardFill className="mobile-logo" />
                 <span className="mobile-title">IT Support Desk</span>
               </div>
-              <button className="mobile-close-btn" onClick={() => setMobileMenuOpen(false)}>
+              <button
+                className="mobile-close-btn"
+                aria-label="Close navigation menu"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 <FiX />
               </button>
             </div>
 
-            <nav className="mobile-nav-links">
+            <nav id="mobile-navigation" className="mobile-nav-links">
               <Link
                 to="/tickets"
                 className={`mobile-nav-item ${currentPath === "/tickets" ? "active" : ""}`}

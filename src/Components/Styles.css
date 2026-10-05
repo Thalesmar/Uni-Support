@@ -1487,10 +1487,22 @@
 @media (max-width: 520px) {
   .header-container {
     padding: 0.65rem 0.75rem;
+    gap: 8px;
+  }
+
+  .header-brand {
+    min-width: 0;
+    flex: 1;
+    gap: 0.55rem;
+  }
+
+  .header-titles {
+    min-width: 0;
   }
 
   .header-heading {
     font-size: 1rem;
+    white-space: nowrap;
   }
 
   .header-logo-container {
@@ -1500,6 +1512,28 @@
   .header-icon-btn {
     width: 32px;
     height: 32px;
+  }
+
+  .header-right-side {
+    flex-shrink: 0;
+    gap: 4px;
+  }
+
+  .header-right-side > .header-icon-btn,
+  .tickets-counter-pill,
+  .user-info-column,
+  .user-chevron {
+    display: none;
+  }
+
+  .header-user-section {
+    padding: 2px;
+  }
+
+  .hamburger-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
 
   .tickets-counter-text {
