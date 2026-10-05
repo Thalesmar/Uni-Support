@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiLock, FiUser, FiEye, FiEyeOff, FiArrowRight, FiArrowLeft, FiAlertCircle } from "react-icons/fi";
 import { BsFillMortarboardFill } from "react-icons/bs";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 import "../Components/Auth.css";
 
 const LoginPage = ({ onAuthSuccess }) => {
@@ -27,7 +27,7 @@ const LoginPage = ({ onAuthSuccess }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/login`, {
+      const response = await apiFetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -40,6 +40,7 @@ const LoginPage = ({ onAuthSuccess }) => {
       const data = await response.json();
 
       if (response.ok) {
+        if (data.token) localStorage.setItem("token", data.token);
         if (onAuthSuccess) onAuthSuccess(data.user);
         navigate("/tickets");
       } else {

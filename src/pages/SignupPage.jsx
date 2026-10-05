@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMail, FiLock, FiUser, FiEye, FiEyeOff, FiShield, FiArrowRight, FiArrowLeft, FiAlertCircle, FiCheckCircle } from "react-icons/fi";
 import { BsFillMortarboardFill } from "react-icons/bs";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 import "../Components/Auth.css";
 
 const SignupPage = () => {
@@ -43,7 +43,7 @@ const SignupPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/register`, {
+      const response = await apiFetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

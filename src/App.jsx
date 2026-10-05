@@ -7,7 +7,7 @@ import SignupPage from "./pages/SignupPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./Components/protectedRoute";
 import { useEffect, useState } from "react";
-import { API_URL } from "./api";
+import { API_URL, apiFetch } from "./api";
 import AdminRoute from "./pages/admin/AdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import "./App.css";
@@ -21,7 +21,7 @@ const App = () => {
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        const response = await fetch(`${API_URL}/profile`, {
+        const response = await apiFetch(`${API_URL}/profile`, {
           credentials: "include",
         });
         if (response.ok) {
@@ -40,13 +40,14 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_URL}/logout`, {
+      await apiFetch(`${API_URL}/logout`, {
         method: "POST",
         credentials: "include",
       });
     } catch (err) {
       console.error("Logout failed:", err);
     } finally {
+      localStorage.removeItem("token");
       setCurrentUser(null);
       setTickets([]);
     }

@@ -7,7 +7,7 @@ import { FaRegClock, FaCheckCircle, FaRegPaperPlane } from "react-icons/fa";
 import { FiChevronDown, FiSliders } from "react-icons/fi";
 import { MdInfo } from "react-icons/md";
 import { BsTrash3 } from "react-icons/bs";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 
 const HardwareIcon = () => (
   <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1.15em" width="1.15em">
@@ -76,7 +76,7 @@ const MainTicketContent = ({ tickets = [], setTickets, currentUser = null }) => 
 
   const fetchTickets = useCallback(async () => {
     try {
-      const response = await fetch(`${API_URL}/tickets`, { credentials: "include" });
+      const response = await apiFetch(`${API_URL}/tickets`);
 
       if (response.status === 401) {
         navigate("/login");
@@ -124,7 +124,7 @@ const MainTicketContent = ({ tickets = [], setTickets, currentUser = null }) => 
     setActionError("");
 
     try {
-      const response = await fetch(`${API_URL}/ticket/create`, {
+      const response = await apiFetch(`${API_URL}/ticket/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -170,7 +170,7 @@ const MainTicketContent = ({ tickets = [], setTickets, currentUser = null }) => 
     );
 
     try {
-      const response = await fetch(`${API_URL}/tickets/${ticketId}/status`, {
+      const response = await apiFetch(`${API_URL}/tickets/${ticketId}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -193,7 +193,7 @@ const MainTicketContent = ({ tickets = [], setTickets, currentUser = null }) => 
     setActionError("");
 
     try {
-      const response = await fetch(`${API_URL}/ticket/delete/${id}`, {
+      const response = await apiFetch(`${API_URL}/ticket/delete/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

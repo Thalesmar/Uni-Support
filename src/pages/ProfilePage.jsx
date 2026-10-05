@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiMail, FiUser, FiShield } from "react-icons/fi";
 import { BsFillMortarboardFill } from "react-icons/bs";
-import { API_URL } from "../api";
+import { API_URL, apiFetch } from "../api";
 import "../Components/Auth.css";
 
 const ProfilePage = ({ currentUser, onLogout }) => {
@@ -14,7 +14,7 @@ const ProfilePage = ({ currentUser, onLogout }) => {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const response = await fetch(`${API_URL}/profile`, { credentials: "include" });
+        const response = await apiFetch(`${API_URL}/profile`);
         const data = await response.json();
         if (response.ok && data.user) {
           setProfile(data.user);

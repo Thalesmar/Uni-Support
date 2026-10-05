@@ -34,12 +34,9 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+    optionsSuccessStatus: 200,
+  }),
 );
-
-app.options(/.*/, (req, res) => {
-  res.sendStatus(204);
-});
 
 app.use(express.json());
 app.use(cookieParser());

@@ -1,6 +1,6 @@
 // src/pages/AdminDashboard.jsx
 import { useEffect, useState } from "react";
-import { API_URL } from "../../api.js";
+import { API_URL, apiFetch } from "../../api.js";
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -11,8 +11,8 @@ const AdminDashboard = () => {
     const fetchAdminData = async () => {
       try {
         const [statsRes, usersRes] = await Promise.all([
-          fetch(`${API_URL}/admin/stats`, { credentials: "include" }),
-          fetch(`${API_URL}/admin/users`, { credentials: "include" }),
+          apiFetch(`${API_URL}/admin/stats`),
+          apiFetch(`${API_URL}/admin/users`),
         ]);
 
         if (statsRes.ok && usersRes.ok) {

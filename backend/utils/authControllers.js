@@ -97,6 +97,7 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       message: "user login",
+      token,
       user: {
         id: user._id,
         username: user.username,
@@ -146,7 +147,7 @@ export const updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
       { username, email },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     res.status(200).json({
