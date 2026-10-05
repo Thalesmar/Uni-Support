@@ -31,7 +31,8 @@ const AdminDashboard = () => {
     fetchAdminData();
   }, []);
 
-  if (loading) return <div className="loading-screen">Loading Admin Panel...</div>;
+  if (loading)
+    return <div className="loading-screen">Loading Admin Panel...</div>;
 
   return (
     <div className="admin-dashboard-container">

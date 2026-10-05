@@ -17,23 +17,34 @@ const PORT = process.env.PORT || process.env.MAIN_PORT || 8080;
 // Reads JSON bodies on POST/PATCH (req.body).
 app.use(express.json());
 
-// Allow requests from your local dev environment AND your GitHub Pages domain
-const allowedOrigins = [
+// Allow requests from local development, GitHub Pages, and Vercel deployments.
+const configuredOrigins = [
   "http://localhost:5173",
+  "http://localhost:3000",
   "https://thalesmar.github.io",
-];
+  ...(process.env.CLIENT_URL ? [process.env.CLIENT_URL] : []),
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+].filter(Boolean);
 
-// Allow the Vite app (port 5173) to call this API and send cookies.
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+
+  if (configuredOrigins.includes(origin)) return true;
+
+  return origin.endsWith(".vercel.app") || origin.includes("vercel.app");
+};
+
+// Allow the frontend app to call this API and send cookies.
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // Required for sending cookies/JWT headers
+    credentials: true,
   })
 );
 // Turns the Cookie header into req.cookies so auth middleware can read `token`.
