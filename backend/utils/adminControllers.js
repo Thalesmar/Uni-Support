@@ -27,7 +27,7 @@ export const getAllUsers = async (req, res) => {
     }
 
     res.status(200).json({ message: "users imported", allUsers });
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };

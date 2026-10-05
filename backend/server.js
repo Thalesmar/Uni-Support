@@ -11,8 +11,8 @@ dotenv.config();
 connectDB();
 
 const app = express();
-// MAIN_PORT comes from backend/.env (1337). 8080 is only a fallback.
-const PORT = process.env.MAIN_PORT || 8080;
+// Vercel injects its own PORT, while local dev can still use MAIN_PORT.
+const PORT = process.env.PORT || process.env.MAIN_PORT || 8080;
 
 // Reads JSON bodies on POST/PATCH (req.body).
 app.use(express.json());
@@ -45,5 +45,8 @@ app.use("/api/", authRoutes);
 
 app.use("/api/admin", adminRoutes);
 
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => console.log(`Listening to ${PORT}`));
+}
 
-app.listen(PORT, () => console.log(`Listening to ${PORT}`));
+export default app;
